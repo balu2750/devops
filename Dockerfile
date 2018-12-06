@@ -1,5 +1,5 @@
-FROM ubuntu:14.04
+FROM centos6
 MAINTAINER balu2750@gmail.com
-RUN apt-get update && apt-get -y install apache2 && service apache2 start && apt-get -y install git && git clone https://github.com/balu2750/msr-repo 
+RUN yum update -y && yum -y install apache2 && service apache2 start && yum  install git -y && git clone https://github.com/balu2750/devops 
 EXPOSE 80
 
