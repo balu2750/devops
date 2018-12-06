@@ -1,0 +1,20 @@
+---
+- name: Docker
+  hosts: all 
+  tasks:
+   - name: download Docker
+     command: yum install docker -y && yum install git -y
+
+   - name: Checking and Cloning
+     command: git --version && git clone https://github.com/balu2750/msr-repo
+
+   - name: Docker execution
+     shell: cd /root/msr-repo;service docker start;docker build -t msr1-image:v1 .
+
+   - name: Run Docker image
+     command: docker run --name webpagev1 -itd -p 8081:80 msr1-image:v1 /bin/bash
+     ignore_errors: yes
+
+   - name: Attaching
+     command: docker exec webpagev1 /bin/bash -c 'rm -f /var/www/html/* ; sudo mv msr-repo/freestyle/* /var/www/html/. ; service apache2 restart'
+
